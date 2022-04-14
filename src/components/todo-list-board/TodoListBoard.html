@@ -1,0 +1,25 @@
+<div id="TodoListBoard">
+    <div class="component-wrapper">
+        <GreetingComponent :title="title"/>
+        <!--свойство компонента:title с присвоенным значением переменной ="title" компонента "TodoListBoard"-->
+    </div>
+
+    <div class="component-wrapper">
+        <SearchBarComponent :message="message" v-on:arrowChanged="changeArrow"/>
+    </div>
+
+    <div class="component-wrapper">
+        <HorizontalButtonsLine :settings="settings" v-on:somebuttonclick="onStatusClick" v-if="areStatusButtonsShown"/>
+    </div>
+
+    <div class="component-wrapper">
+        <UnderlineMessageComponent :message="getStatusMessage()"/>
+    </div>
+
+    <div>
+        <ListComponent :list="list" :disableCreation="!isCreationEnabled()" v-on:createitem="createItem"
+                       v-on:deleteitem="removeItem" :showCheckmarks="showCheckmarks()"
+                       :titlesTextDecoration="getListTitleDecorations()"
+                       :showDeletionCrosses="showDeletionCrosses()"/>
+    </div>
+</div>

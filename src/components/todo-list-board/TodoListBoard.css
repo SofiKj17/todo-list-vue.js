@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Rationale&family=Reem+Kufi&display=swap');
+
+#TodoListBoard {
+    position: relative;
+    width: 216px;
+    height: 327px;
+
+    margin: 0 auto;
+    border-radius: 11px;
+    background: #E4FFFC;
+    padding: 10px 15px 0 15px;
+}
+
+.component-wrapper {
+    margin-bottom: 5px;
+}
