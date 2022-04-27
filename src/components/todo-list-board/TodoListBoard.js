@@ -30,6 +30,7 @@ export default {//объект
             areStatusButtonsShown: false,
             remote: new RemoteTaskService()
             //объект c переменными компонента
+            //remote: new TaskService() - change, async и await - удалить (чтобы запустить без базы)
         }
     },
     mounted() { //вызывается когда компонент построен vue.js
@@ -66,7 +67,7 @@ export default {//объект
             return this.currentStatusToShow === TaskStatus.COMPLETED;
         },
         showDeletionCrosses() {
-          return !(this.currentStatusToShow === TaskStatus.REMOVED || this.currentStatusToShow === TaskStatus.COMPLETED);//сравнение
+          return !(this.currentStatusToShow === TaskStatus.COMPLETED);//сравнение
         },
         getListTitleDecorations() {
           if(this.currentStatusToShow === TaskStatus.COMPLETED) {
@@ -80,11 +81,16 @@ export default {//объект
         },
         async createItem(itemName) {// имя таски которую создаем
             await this.taskService.create({name: itemName, status: this.currentStatusToShow});//объект
-            this.list = await this.findTasks();
+            await this.findTasks();
         },
         async removeItem(id) {
-            await this.taskService.removeById(id);
-            this.list = await this.findTasks();
+            //Добавлен if взависимости от текущего статуса выполняется один из них
+            if(this.currentStatusToShow === TaskStatus.REMOVED) {
+                await this.taskService.deleteById(id);
+            } else {
+                await this.taskService.changeStatusToRemovedById(id);
+            }
+            await this.findTasks();
         }
     }
 }
